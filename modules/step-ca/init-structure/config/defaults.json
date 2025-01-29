@@ -1,0 +1,6 @@
+{
+	"ca-url": "https://cowboyai.local:8500",
+	"ca-config": "/home/step/.step/config/ca.json",
+	"fingerprint": "0642b283237cbe2f42646044dc79f0e2631b21308d5e2357d06b42d50bb816fe",
+	"root": "/home/step/.step/certs/root_ca.crt"
+}
