@@ -8,3 +8,7 @@ Replace
 git remote -v
 git remote add origin ssh://git@github-cowboy/TheCowboyAI/inception-pki-realm-node.git
 git remote set-url origin ssh://git@github-cowboy/TheCowboyAI/inception-pki-realm-node.git
+
+git checkout <branch>
+git stash list
+git stash show
