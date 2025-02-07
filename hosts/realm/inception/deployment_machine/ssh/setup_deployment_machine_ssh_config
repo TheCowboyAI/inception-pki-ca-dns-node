@@ -1,0 +1,37 @@
+
+## Use programs.ssh.extraConfig = '' CONTENT HERE ''; to add it.
+##
+## For this to work you need to have all necessary files already placed in ~/.ssh/ on the deployment_machine
+## cowboy_deployment_cowboyai_local_1,
+## cowboy_deployment_cowboyai_local_1.pub,
+## cowboy_deployment_cowboyai_local_1.pass,
+## cowboy_deployment_cowboyai_local_1-cert.pub
+## setup_deployment_paste_to_known_hosts content added to ~/.ssh/known_hosts
+## eg:
+##    cp ./cowboy_deployment_cowboyai_local_1* ~/.ssh/
+##    chmod 600 ~/.ssh/cowboy_deployment_cowboyai_local_1*
+##    cat ./setup_deployment_paste_to_known_hosts >> ~/.ssh/known_hosts
+##
+## Ssh keys are also used by git to determine the user.
+## git clone git@git-cowboy:<YOUR_ORG>/<REPO>.git
+## Test connection with: ssh git@git-cowboy
+
+Host git-cowboy-cowboyai_local_1
+  ## In case you don't have DNS record for the host replace below with the HOST_IP
+  Hostname git.cowboyai.local
+  Port 2222
+  IdentityFile ~/.ssh/cowboy_deployment_cowboyai_local_1
+  ForwardAgent yes
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+
+Host realm-cowboy-cowboyai_local_1
+  ## In case you don't have DNS record for the host replace below with the HOST_IP
+  Hostname realm.cowboyai.local
+  Port 22
+  IdentityFile ~/.ssh/cowboy_deployment_cowboyai_local_1
+  ForwardAgent yes
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+
+

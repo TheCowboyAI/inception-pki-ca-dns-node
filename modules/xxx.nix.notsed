@@ -1,0 +1,63 @@
+{ config
+, pkgs
+, ...
+}:
+let
+  communitizeFiles = pkgs.copyPathToStore ./communitize;
+  kecoFiles = pkgs.copyPathToStore ./keco;
+  aiFiles = pkgs.copyPathToStore ./ai;
+  cguiFiles = pkgs.copyPathToStore ./cgui;
+  arrowsFiles = pkgs.copyPathToStore ./arrows;
+  wwwFiles = pkgs.copyPathToStore ./www;
+  www-devFiles = pkgs.copyPathToStore ./www-dev;
+in
+{
+...
+
+  ## if you use systemd.tmpfile you don't have to create the dirs in the services script, just cp
+  ## 3 parts to copy something to nix...
+  ##  Copy it to the nix store
+  ##  create a folder to put it in
+  ##  either copy or symlink it in an init service
+
+  systemd.services.init-db = {
+    description = "Copy www files";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" "polkit.service" ];
+    requires = [ "network-online.target" ];
+    path = [ "/run/current-system/sw/" ];
+    script = ''
+      mkdir -p /var/lib/communitize
+      cp -R ${communitizeFiles}/* /var/lib/communitize/
+      chown -R nginx /var/lib/communitize
+
+      mkdir -p /var/lib/keco
+      cp -R ${kecoFiles}/* /var/lib/keco/
+      chown -R nginx /var/lib/keco
+
+      mkdir -p /var/lib/ai
+      cp -R ${aiFiles}/* /var/lib/ai/
+      chown -R nginx /var/lib/ai
+
+      mkdir -p /var/lib/cgui
+      cp -R ${cguiFiles}/* /var/lib/cgui/
+      chown -R nginx /var/lib/cgui
+
+      mkdir -p /var/lib/arrows
+      cp -R ${arrowsFiles}/* /var/lib/arrows/
+      chown -R nginx /var/lib/arrows
+
+      mkdir -p /var/lib/www
+      cp -R ${wwwFiles}/* /var/lib/www/
+      chown -R nginx /var/lib/www
+
+      mkdir -p /var/lib/www-dev
+      cp -R ${www-devFiles}/* /var/lib/www-dev/
+      chown -R nginx /var/lib/www-dev
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+  };
+
+}

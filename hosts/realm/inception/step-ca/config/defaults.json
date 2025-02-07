@@ -1,0 +1,6 @@
+{
+	"ca-url": "https://ca.cowboyai.local",
+	"ca-config": "/var/lib/step-ca/config/ca.json",
+	"fingerprint": "dummy-intermediate-ca-crt-fingerprint",
+	"root": "/var/lib/step-ca/certs/root_ca.crt"
+}

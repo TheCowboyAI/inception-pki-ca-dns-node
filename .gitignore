@@ -1,0 +1,8 @@
+# *.key
+# *.csr
+# *.crt
+# *_key
+#./modules/inception/*
+./result
+./facter.json
+./work_notes.modules
